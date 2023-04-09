@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :pokemon do
-    name {"Pikachu"}
+    sequence(:name) { |n| "pokemon#{n}" }
     type_1 {"Electric"}
     type_2 { }
     total { 320 }
