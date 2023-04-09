@@ -88,7 +88,6 @@ describe "Pokemons Api v1", type: :request do
     it "returns 400 if required parameter missing" do
       post api_v1_pokemons_url, params: { pokemon: { } }
       expect(response).to have_http_status(:bad_request)
-      p JSON.parse(response.body)
       expect(JSON.parse(response.body)['error']).to eq("Required parameter missing")
     end
   end
