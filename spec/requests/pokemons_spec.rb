@@ -3,7 +3,7 @@ require 'rails_helper'
 describe "Pokemons Api v1", type: :request do
   before do
     Pokemon.destroy_all
-    FactoryBot.create_list(:pokemon, 15)
+    FactoryBot.create_list(:pokemon, 20)
     @pokemon = Pokemon.all.sample
   end
 
@@ -11,9 +11,23 @@ describe "Pokemons Api v1", type: :request do
     it 'gets all pokemons' do
       get api_v1_pokemons_url
       expect(response).to have_http_status(:success)
-      expect(JSON.parse(response.body).size).to eq(15)  
     end
   end
+
+  describe "returns paginated list of 10 pokemons" do
+    it 'gets first page' do
+      get api_v1_pokemons_url, params: { page: 1 }
+      expect(response).to have_http_status(:success)
+      expect(JSON.parse(response.body).size).to eq(10)  
+    end
+
+    it 'gets second page' do
+      get api_v1_pokemons_url, params: { page: 2 }
+      expect(response).to have_http_status(:success)
+      expect(JSON.parse(response.body).size).to eq(10)  
+    end
+  end
+  
 
   describe "GET #Show" do
     it "gets requested pokemon" do
