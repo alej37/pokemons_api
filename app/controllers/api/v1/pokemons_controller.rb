@@ -6,17 +6,17 @@ class Api::V1::PokemonsController < ApplicationController
 
   def index
     @pokemons = Pokemon.page(params[:page]).per(10)
-    render json: @pokemons
+    render json: @pokemons.as_json
   end
 
   def show
-    render json: @pokemon
+    render json: @pokemon.as_json
   end
 
   def create
     @pokemon = Pokemon.new(pokemon_params)
     if @pokemon.save
-      render json: @pokemon, status: :created
+      render json: @pokemon.as_json, status: :created
     else
       render json: @pokemon.errors, status: :unprocessable_entity
     end
@@ -24,7 +24,7 @@ class Api::V1::PokemonsController < ApplicationController
 
   def update
     if @pokemon.update(pokemon_params)
-      render json: @pokemon
+      render json: @pokemon.as_json
     else
       render json: @pokemon.errors, status: :unprocessable_entity
     end
