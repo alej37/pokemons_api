@@ -1,7 +1,6 @@
 class Api::V1::PokemonsController < ApplicationController
   before_action :set_pokemon, only: [:show, :update, :destroy]
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
-  rescue_from ActiveRecord::RecordNotDestroyed, with: :not_destroyed
   rescue_from ActionController::ParameterMissing, with: :param_missing
 
 
@@ -32,7 +31,7 @@ class Api::V1::PokemonsController < ApplicationController
   end
 
   def destroy
-    @pokemon.destroy!
+    @pokemon.destroy
     head :no_content
   end
 
@@ -48,10 +47,6 @@ class Api::V1::PokemonsController < ApplicationController
   
   def not_found
     render json: { error: "Pokemon not found" }, status: :not_found
-  end
-
-  def not_destroyed
-    render json: { error: "Pokemon could not be deleted" }, status: :unprocessable_entity
   end
 
   def param_missing
