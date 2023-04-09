@@ -33,7 +33,7 @@ describe "Pokemons Api v1", type: :request do
     it "gets requested pokemon" do
       get api_v1_pokemon_url(@pokemon)
       expect(response).to have_http_status(:success)
-      expect(JSON.parse(response.body)['id']).to eq(@pokemon.id)    
+      expect(JSON.parse(response.body)).to eq(@pokemon.as_json)    
     end
     
     it "returns 404 if pokemon not found" do
