@@ -85,11 +85,10 @@ describe "Pokemons Api v1", type: :request do
   end
 
   describe "Error Handling" do
-    it "returns 400 if required parameter missing" do
+    it "returns 400 if pokemon is missing from required body format" do
       post api_v1_pokemons_url, params: { pokemon: { } }
       expect(response).to have_http_status(:bad_request)
-      expect(JSON.parse(response.body)['error']).to eq("Required parameter missing")
+      expect(JSON.parse(response.body)['error']).to eq("Required parameter missing: pokemon")
     end
   end
-  
 end
