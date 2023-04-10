@@ -3,20 +3,23 @@ class Api::V1::PokemonsController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
   rescue_from ActionController::ParameterMissing, with: :param_missing
 
-
   def index
     @pokemons = Pokemon.page(params[:page]).per(10)
-    render json: @pokemons
+    render json: {
+      pokemons: @pokemons.as_json, 
+      total_pages: @pokemons.total_pages, 
+      current_page: @pokemons.current_page
+    }
   end
 
   def show
-    render json: @pokemon
+    render json: @pokemon.as_json
   end
 
   def create
     @pokemon = Pokemon.new(pokemon_params)
     if @pokemon.save
-      render json: @pokemon, status: :created
+      render json: @pokemon.as_json, status: :created
     else
       render json: @pokemon.errors, status: :unprocessable_entity
     end
@@ -24,7 +27,7 @@ class Api::V1::PokemonsController < ApplicationController
 
   def update
     if @pokemon.update(pokemon_params)
-      render json: @pokemon
+      render json: @pokemon.as_json
     else
       render json: @pokemon.errors, status: :unprocessable_entity
     end
@@ -49,8 +52,7 @@ class Api::V1::PokemonsController < ApplicationController
     render json: { error: "Pokemon not found" }, status: :not_found
   end
 
-  def param_missing
-    render json: { error: "Required parameter missing" }, status: :bad_request
+  def param_missing(e)
+    render json: { error: "Required parameter missing: #{e.param}" }, status: :bad_request
   end
-
 end

@@ -18,13 +18,17 @@ describe "Pokemons Api v1", type: :request do
     it 'gets first page' do
       get api_v1_pokemons_url, params: { page: 1 }
       expect(response).to have_http_status(:success)
-      expect(JSON.parse(response.body).size).to eq(10)  
+      expect(JSON.parse(response.body)['pokemons'].size).to eq(10) 
+      expect(JSON.parse(response.body)['total_pages']).to eq(2)
+      expect(JSON.parse(response.body)['current_page']).to eq(1) 
     end
 
     it 'gets second page' do
       get api_v1_pokemons_url, params: { page: 2 }
       expect(response).to have_http_status(:success)
-      expect(JSON.parse(response.body).size).to eq(10)  
+      expect(JSON.parse(response.body)['pokemons'].size).to eq(10)
+        expect(JSON.parse(response.body)['total_pages']).to eq(2)
+      expect(JSON.parse(response.body)['current_page']).to eq(2)   
     end
   end
   
@@ -33,7 +37,7 @@ describe "Pokemons Api v1", type: :request do
     it "gets requested pokemon" do
       get api_v1_pokemon_url(@pokemon)
       expect(response).to have_http_status(:success)
-      expect(JSON.parse(response.body)['id']).to eq(@pokemon.id)    
+      expect(JSON.parse(response.body)).to eq(@pokemon.as_json)    
     end
     
     it "returns 404 if pokemon not found" do
@@ -85,12 +89,10 @@ describe "Pokemons Api v1", type: :request do
   end
 
   describe "Error Handling" do
-    it "returns 400 if required parameter missing" do
+    it "returns 400 if pokemon is missing from required body format" do
       post api_v1_pokemons_url, params: { pokemon: { } }
       expect(response).to have_http_status(:bad_request)
-      p JSON.parse(response.body)
-      expect(JSON.parse(response.body)['error']).to eq("Required parameter missing")
+      expect(JSON.parse(response.body)['error']).to eq("Required parameter missing: pokemon")
     end
   end
-  
 end
