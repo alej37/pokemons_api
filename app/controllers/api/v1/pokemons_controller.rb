@@ -5,7 +5,11 @@ class Api::V1::PokemonsController < ApplicationController
 
   def index
     @pokemons = Pokemon.page(params[:page]).per(10)
-    render json: @pokemons.as_json
+    render json: {
+      pokemons: @pokemons.as_json, 
+      total_pages: @pokemons.total_pages, 
+      current_page: @pokemons.current_page
+    }
   end
 
   def show

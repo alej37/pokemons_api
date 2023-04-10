@@ -18,13 +18,17 @@ describe "Pokemons Api v1", type: :request do
     it 'gets first page' do
       get api_v1_pokemons_url, params: { page: 1 }
       expect(response).to have_http_status(:success)
-      expect(JSON.parse(response.body).size).to eq(10)  
+      expect(JSON.parse(response.body)['pokemons'].size).to eq(10) 
+      expect(JSON.parse(response.body)['total_pages']).to eq(2)
+      expect(JSON.parse(response.body)['current_page']).to eq(1) 
     end
 
     it 'gets second page' do
       get api_v1_pokemons_url, params: { page: 2 }
       expect(response).to have_http_status(:success)
-      expect(JSON.parse(response.body).size).to eq(10)  
+      expect(JSON.parse(response.body)['pokemons'].size).to eq(10)
+        expect(JSON.parse(response.body)['total_pages']).to eq(2)
+      expect(JSON.parse(response.body)['current_page']).to eq(2)   
     end
   end
   
