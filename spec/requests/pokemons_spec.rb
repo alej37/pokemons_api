@@ -12,6 +12,13 @@ describe "Pokemons Api v1", type: :request do
       get api_v1_pokemons_url
       expect(response).to have_http_status(:success)
     end
+
+    it 'returns 404 if no pokemons found' do
+      Pokemon.destroy_all
+      get api_v1_pokemons_url
+      expect(response).to have_http_status(:not_found)
+      expect(JSON.parse(response.body)['error']).to eq("No pokemons found in database")
+    end
   end
 
   describe "returns paginated list of 10 pokemons" do
