@@ -5,11 +5,15 @@ class Api::V1::PokemonsController < ApplicationController
 
   def index
     @pokemons = Pokemon.page(params[:page]).per(10)
-    render json: {
-      pokemons: @pokemons.as_json, 
-      total_pages: @pokemons.total_pages, 
-      current_page: @pokemons.current_page
-    }
+    if @pokemons.empty?
+      render json: { error: "No pokemons found in database" }, status: :not_found
+    else
+      render json: {
+        pokemons: @pokemons.as_json, 
+        total_pages: @pokemons.total_pages, 
+        current_page: @pokemons.current_page
+      }
+    end
   end
 
   def show
