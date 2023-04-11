@@ -29,34 +29,103 @@ How to run project:
 
     `bundle exec rspec`
 
-API Endpoints
+# API Endpoints
 
-  - All pokemons (10 by page)
+## All Pokemons (10 per page)
 
-    ` GET http://localhost:3000/api/v1/pokemons `
+- **GET** `http://localhost:3000/api/v1/pokemons`
 
-    <font color="red"><i>Errors: Not Found (404), this error occurs when no Pokemons are found in the database.</i></font>
+  Retrieves a list of all Pokemons, with a maximum of 10 Pokemons per page.
+
+  **Errors:**
+  - Not Found (404): This error occurs when no Pokemons are found in the database.
+
+## Get a Pokemon
+
+- **GET** `http://localhost:3000/api/v1/pokemons/:id`
+
+  Retrieves a specific Pokemon by its ID.
+
+  **Errors:**
+  - Not Found (404): This error occurs when a Pokemon with the corresponding ID is not found in the database.
+
+## Create a Pokemon
+
+- **POST** `http://localhost:3000/api/v1/pokemons`
+
+  Creates a new Pokemon.
+
+   **Request Body:**
+
+      {
+        "pokemon": {
+        "name": "string",
+        "type_1": "string",
+        "type_2": "string",
+        "total": "integer",
+        "hp": "integer",
+        "attack": "integer",
+        "defense": "integer",
+        "sp_atk": "integer",
+        "sp_def": "integer",
+        "speed": "integer",
+        "generation": "integer",
+        "legendary": "boolean"
+        }
+      }
+
+  **Request Headers:**
+
+  Content-Type: application/json
+  
+  **Status:**
+  - Created (201): The Pokemon was successfully created.
+
+  **Errors:**
+  - Unprocessable Entity (422): This error occurs when the app is not able to create a Pokemon.
+  - Bad Request (400): This error occurs when the request body does not follow the expected format.
+
+## Update a Pokemon
+
+- **PUT** `http://localhost:3000/api/v1/pokemons/:id`
+
+  Updates an existing Pokemon by its ID.
+
+  **Request Body:**
+
+      {
+        "pokemon": {
+        "name": "string",
+        "type_1": "string",
+        "type_2": "string",
+        "total": "integer",
+        "hp": "integer",
+        "attack": "integer",
+        "defense": "integer",
+        "sp_atk": "integer",
+        "sp_def": "integer",
+        "speed": "integer",
+        "generation": "integer",
+        "legendary": "boolean"
+        }
+      }
+
+  **Request Headers:**
+
+  Content-Type: application/json
+
+  **Errors:**
+  - Unprocessable Entity (422): This error occurs when the app is not able to update a Pokemon.
+  - Bad Request (400): This error occurs when the request body does not follow the expected format.
 
 
-  - Get a Pokemon
+## Delete a Pokemon
 
-    ` GET http://localhost:3000/api/v1/pokemons/id`
+- **DELETE** `http://localhost:3000/api/v1/pokemons/:id`
 
-    <font color="red"><i>Errors: Not Found (404),  this error occours when Pokemon with corresponding id is not found in database.</i></font>
+  Deletes a specific Pokemon by its ID.
 
+  **Status:**
+  - No Content (204): The Pokemon was successfully deleted.
 
-  - Creates a Pokemon
-
-    `POST http://localhost:3000/api/v1/pokemons, status: Created(201)`
-
-    <font color="red"><i>Errors: Unprocessable entity(422), this error occours when app is not able to create a Pokemon.</i></font>
-
-  - Updates a Pokemon
-
-    `PUT http://localhost:3000/api/v1/pokemons/id`
-
-    <font color="red"><i>Errors: Unprocessable entity(422), this error occours when app is not able to update a Pokemon.</i></font>
-
-  - Deletes a Pokemon
-
-    ` Delete http://localhost:3000/api/v1/pokemons/id, status: No Content(204)`
+Note: Please replace `:id` in the URLs with the actual ID of the Pokemon you want to retrieve, update, or delete.
