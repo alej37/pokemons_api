@@ -1,24 +1,30 @@
-# README
+# Rails Pokemon API
+  API project that uses a CSV as database seeding. The project contains CRUD actions, pagination and Rspec testing.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Tools:
+  * Ruby 3.1.2
+  * Rails 7.0.4
+  * SQLite 3.37.2 (For this project, I decided to go for simplicity. Taking into account production environment and scalabilty, a database like Postgresql would be a much better option)
 
-Things you may want to cover:
 
-* Ruby version
+How to run project:
 
-* System dependencies
+  - Clone repository
 
-* Configuration
+    `git clone https://github.com/alej37/pokemons_api.git`
 
-* Database creation
+  - Install dependencies
 
-* Database initialization
+    `bundle install`
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+  - Setup database:
+    
+    `rails db:create db:migrate db:seed`
+  
+  - Run server:
+    
+    `rails server`
+  
+  - Run tests:
+  
+    `bundle exec rspec`
