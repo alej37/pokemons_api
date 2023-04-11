@@ -33,7 +33,7 @@ How to run project:
 
 ## All Pokemons (10 per page)
 
-- **GET** `http://localhost:3000/api/v1/pokemons`
+- **GET** `http://localhost:3000/api/v1/pokemons or http://localhost:3000/api/v1/pokemons?page=<page_number>`
 
   Retrieves a list of all Pokemons, with a maximum of 10 Pokemons per page.
 
