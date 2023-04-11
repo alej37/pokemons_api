@@ -26,5 +26,37 @@ How to run project:
     `rails server`
   
   - Run tests:
-  
+
     `bundle exec rspec`
+
+API Endpoints
+
+  - All pokemons (10 by page)
+
+    ` GET http://localhost:3000/api/v1/pokemons `
+
+    <font color="red"><i>Errors: Not Found (404), this error occurs when no Pokemons are found in the database.</i></font>
+
+
+  - Get a Pokemon
+
+    ` GET http://localhost:3000/api/v1/pokemons/id`
+
+    <font color="red"><i>Errors: Not Found (404),  this error occours when Pokemon with corresponding id is not found in database.</i></font>
+
+
+  - Creates a Pokemon
+
+    `POST http://localhost:3000/api/v1/pokemons, status: Created(201)`
+
+    <font color="red"><i>Errors: Unprocessable entity(422), this error occours when app is not able to create a Pokemon.</i></font>
+
+  - Updates a Pokemon
+
+    `PUT http://localhost:3000/api/v1/pokemons/id`
+
+    <font color="red"><i>Errors: Unprocessable entity(422), this error occours when app is not able to update a Pokemon.</i></font>
+
+  - Deletes a Pokemon
+
+    ` Delete http://localhost:3000/api/v1/pokemons/id, status: No Content(204)`
